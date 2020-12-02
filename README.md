@@ -29,6 +29,6 @@ Bisset, Keith & Chen, Jiangzhuo & Feng, Xizhou & Kumar, Sritesh & Marathe, Madha
 ### Sample raw files
   portland_graph_reduced<br/>
   
-### Sample code
+### Sample commands
   > python epifast_sequential.py --input_format json --input_file 100000_subgraph.map --output_file output.log <br/>
   > python epifast_sequential.py --input_format json --input_file 1000_subgraph.map --output_file output.log --transmission_rate 0.9
