@@ -126,7 +126,7 @@ parser.add_argument("--init_infection", required=False, type=int, default="20", 
 parser.add_argument("--transmission_rate", required=False, type=str, default="0.5", help="probability of disease transmission for a contact of one unit time")
 parser.add_argument("--incubation_period", required=False, type=int, default="2", help="Average time period(in days) to be in exposed phase")
 parser.add_argument("--infectious_period", required=False, type=int, default="4", help="Average time period(in days) to be infectious to other nodes")
-
+parser.add_argument("--intervention", required=False, type=int, default="0", help="Options for intervention. Default 0. 0=No intervention, 1=Intervention 1, 2=intervention2")
 
 args = parser.parse_args()
 input_format = args.input_format[0]
