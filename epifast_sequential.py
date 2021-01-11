@@ -51,7 +51,6 @@ def sequential(G, rate, S, E, I, R, NE, T, t_rate):
     for t in range(T):
         #first thing of the day
         #update at morning 
-        print(t)
         update(G, rate, S, E, I, R, NE)
 
         #no intervention at this level
@@ -67,30 +66,9 @@ def sequential(G, rate, S, E, I, R, NE, T, t_rate):
                 if (c[1] in S) and (np.random.binomial(1, t_rate) >0):
                     NE.append(c[1])
                     S.remove(c[1])
+            print("%s\t%s\t%s\t%s\t%s\t%s" % (str(t+1), str(len(S)), str(len(E.keys())), str(len(I.keys())), str(len(R)), str(len(NE))))
 
-        #print
-        print("On day " + str(t+1) +'\n')
-        print("Number of susceptible is " + str(len(S)) + '\n')
-        print("Number of exposed is " + str(len(E.keys())) + '\n')
-        print("Number of infectious is " + str(len(I.keys())) + '\n')
-        print("Number of Recovered " + str(len(R)) + '\n')
-        #print("Suscepted nodes are:")
-        #for s in S:
-        #    print(s)
-        #print("Infected nodes are: ")
-        #for i in I.keys():
-        #    print(i)
-        #print("New exposed nodes are:")
-        #for ne in NE:
-        #    print(ne) 
-        #print("Exposed nodes are:")
-        #for e in E.keys():
-        #    print(e) 
-        #print("Recovered nodes are:")
-        #for r in R:
-        #    print(r)
-        print('\n')
-
+        
 print("Starting.....")
 
 parser =argparse.ArgumentParser()
@@ -121,6 +99,8 @@ sys.stdout=open(output_file, 'w')
 time = args.time
 init_infection = args.init_infection
 transmission_rate = float(args.transmission_rate)
+#print(args.transmission_rate)
+#print(transmission_rate)
 t_e = args.incubation_period
 t_i = args.infectious_period
 
@@ -179,18 +159,5 @@ print("calling sequentials")
 susceptible=[node for node in list(G.nodes()) if node not in init_infectious_nodes]
 
 
-
+print("Day\tSusceptible\tExposed\tInterfectious\tRecovered\tNewly Exposed")
 sequential(G, rate, susceptible, exposed, infectious, removed, newly_exposed, T, t_r)
-#number of nodes w/ one or more edges 
-#number of nodes
-#number of connected nodes
-#number of clusters 
-#centrality 
-#print("done")
-#print("average degree")
-#print(sum(just_number)/len(just_number))
-#print("number of vertex")
-#print(len(just_number))
-#print(ver_ver)
-#map_file.write(json_graph.dumps(G))
-
