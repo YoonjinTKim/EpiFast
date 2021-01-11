@@ -109,6 +109,64 @@ def sequential(G, rate, S, E, I, R, NE, T, t_rate):
                     S.remove(c[1])
             print("%s\t%s\t%s\t%s\t%s\t%s" % (str(t+1), str(len(S)), str(len(E.keys())), str(len(I.keys())), str(len(R)), str(len(NE))))
 
+def seq_intervention1(G, rate, S, E, I, R, NE, T, t_rate, remove_edge_percent=10):
+    for t in range(T):
+        #first thing of the day
+        #update at morning 
+        update(G, rate, S, E, I, R, NE)
+
+        #no intervention at this level
+                #no intervention at this level
+        #intervention 1
+        removed_edges = []
+        #if infected people are greater than 0.1% of population
+        if len(I.keys()) > (len(S) + len(E.keys()) + len(I.keys()) + len(R) + len(NE)) * 0.0001:
+            #print((len(S) + len(E.keys()) + len(I.keys()) + len(R) + len(NE))  * 0.0001)
+            #print("intervention activated")
+            removed_edges = intervention1(G, remove_edge_percent)
+            #print(removed_edges)
+        for i in I.keys():
+            contact = G.out_edges(i)
+            for c in contact:
+                #calculate transmissibility 
+                #p(w(u,v)) = 1-(1-r)^{(w(u,v))}
+                #TODO actually impliment weighted but since the weight is uniformed, the p(w(u,v)) = 0.5 
+                #if v is adjacenet to u. 
+                #if transmissed
+                if (c not in removed_edges) and (c[1] in S) and (np.random.binomial(1, 0.5) >0):
+                    NE.append(c[1])
+                    S.remove(c[1])
+
+            print("%s\t%s\t%s\t%s\t%s\t%s" % (str(t+1), str(len(S)), str(len(E.keys())), str(len(I.keys())), str(len(R)), str(len(NE))))
+
+def seq_intervention2(G, rate, S, E, I, R, NE, T, t_rate, remove_edge_percent=10, threshold=5):
+    for t in range(T):
+        #first thing of the day
+        #update at morning 
+        update(G, rate, S, E, I, R, NE)
+
+        #no intervention at this level
+        
+        removed_edges = []
+        #if infected people are greater than 0.1% of population
+        if len(I.keys()) > (len(S) + len(E.keys()) + len(I.keys()) + len(R) + len(NE)) * 0.0001:
+            #print((len(S) + len(E.keys()) + len(I.keys()) + len(R) + len(NE))  * 0.0001)
+            #print("intervention activated")
+            removed_edges = intervention2(G, remove_edge_percent, threshold)
+            #print(removed_edges)
+        for i in I.keys():
+            contact = G.out_edges(i)
+            for c in contact:
+                #calculate transmissibility 
+                #p(w(u,v)) = 1-(1-r)^{(w(u,v))}
+                #TODO actually impliment weighted but since the weight is uniformed, the p(w(u,v)) = 0.5 
+                #if v is adjacenet to u. 
+                #if transmissed
+                if (c not in removed_edges) and (c[1] in S) and (np.random.binomial(1, 0.5) >0):
+                    NE.append(c[1])
+                    S.remove(c[1])
+
+            print("%s\t%s\t%s\t%s\t%s\t%s" % (str(t+1), str(len(S)), str(len(E.keys())), str(len(I.keys())), str(len(R)), str(len(NE))))
         
 print("Starting.....")
 
@@ -131,6 +189,10 @@ parser.add_argument("--transmission_rate", required=False, type=str, default="0.
 parser.add_argument("--incubation_period", required=False, type=int, default="2", help="Average time period(in days) to be in exposed phase")
 parser.add_argument("--infectious_period", required=False, type=int, default="4", help="Average time period(in days) to be infectious to other nodes")
 parser.add_argument("--intervention", required=False, type=int, default="0", help="Options for intervention. Default 0. 0=No intervention, 1=Intervention 1, 2=intervention2")
+parser.add_arguemnt("--remove_edge_percent", required=False, type=int, default=10, help="With intervention option removing 10% of edges")
+parser.add_argument("--threshold", required=False, type=int, default=5, help="Only edges from node with 5+ edges will be considered to be removed with intervention 2")
+
+
 
 args = parser.parse_args()
 input_format = args.input_format[0]
@@ -142,9 +204,11 @@ init_infection = args.init_infection
 transmission_rate = float(args.transmission_rate)
 #print(args.transmission_rate)
 #print(transmission_rate)
+intervention = args.intervention
 t_e = args.incubation_period
 t_i = args.infectious_period
-
+remove_edge_percent = args.remove_edge_percent
+threshold = args.threshold
 
 rate = {'t_e': t_e, 't_i':t_i}
 t_r=transmission_rate
@@ -201,4 +265,11 @@ susceptible=[node for node in list(G.nodes()) if node not in init_infectious_nod
 
 
 print("Day\tSusceptible\tExposed\tInterfectious\tRecovered\tNewly Exposed")
-sequential(G, rate, susceptible, exposed, infectious, removed, newly_exposed, T, t_r)
+if (intervention == 0):
+    sequential(G, rate, susceptible, exposed, infectious, removed, newly_exposed, T, t_r)
+elif (intervention == 1):
+    seq_intervention1(G, rate, susceptible, exposed, infectious, removed, newly_exposed, T, t_r, remove_edge_percent)
+elif (intervention == 2):
+    seq_intervention2(G, rate, susceptible, exposed, infectious, removed, newly_exposed, T, t_r, remove_edge_percent, threshold)
+else:
+    print("Invalid intervention input")
