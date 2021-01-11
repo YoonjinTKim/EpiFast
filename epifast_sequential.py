@@ -6,7 +6,7 @@ import networkx as nx
 from networkx.readwrite import json_graph
 # Import packages for data cleaning
 import numpy as np
-import pandas as pd
+#import pandas as pd
 import re # For finding specific strings in the text
 # Import packages for data visualization
 import networkx as nx
@@ -183,7 +183,7 @@ parser.add_argument("--output_file",
                     nargs='+',
                     required=True,
                     help="Name of the output file")
-parser.add_argument("--time", required=False, type=int, default="100", help="Simulation period in days")
+parser.add_argument("--time", required=False, type=int, default="300", help="Simulation period in days")
 parser.add_argument("--init_infection", required=False, type=int, default="20", help="Number of initial infectious people")
 parser.add_argument("--transmission_rate", required=False, type=str, default="0.5", help="probability of disease transmission for a contact of one unit time")
 parser.add_argument("--incubation_period", required=False, type=int, default="2", help="Average time period(in days) to be in exposed phase")
@@ -198,7 +198,7 @@ args = parser.parse_args()
 input_format = args.input_format[0]
 input_file = args.input_file[0]
 output_file = args.output_file[0]
-sys.stdout=open(output_file, 'w')
+#sys.stdout=open(output_file, 'w')
 time = args.time
 init_infection = args.init_infection
 transmission_rate = float(args.transmission_rate)
