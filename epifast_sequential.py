@@ -133,7 +133,7 @@ def seq_intervention1(G, rate, S, E, I, R, NE, T, t_rate, remove_edge_percent=10
                 #TODO actually impliment weighted but since the weight is uniformed, the p(w(u,v)) = 0.5 
                 #if v is adjacenet to u. 
                 #if transmissed
-                if (c not in removed_edges) and (c[1] in S) and (np.random.binomial(1, 0.5) >0):
+                if (c not in removed_edges) and (c[1] in S) and (np.random.binomial(1, t_rate) >0):
                     NE.append(c[1])
                     S.remove(c[1])
 
@@ -162,7 +162,7 @@ def seq_intervention2(G, rate, S, E, I, R, NE, T, t_rate, remove_edge_percent=10
                 #TODO actually impliment weighted but since the weight is uniformed, the p(w(u,v)) = 0.5 
                 #if v is adjacenet to u. 
                 #if transmissed
-                if (c not in removed_edges) and (c[1] in S) and (np.random.binomial(1, 0.5) >0):
+                if (c not in removed_edges) and (c[1] in S) and (np.random.binomial(1, t_rate) >0):
                     NE.append(c[1])
                     S.remove(c[1])
 
