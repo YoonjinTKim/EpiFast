@@ -46,6 +46,28 @@ def intervention1(G, percent_removed=10):
     return selected
 
 
+#Call intervention 2 when there are 2% of population is infected
+#return list of edges to remove with number of threshold is greater
+#default percent_remove = 10%
+#default threshold of number of outer edges = 3
+def intervention2(G, percent_removed, threshold):
+    #number of edges removed
+    #collect nodes if one of the nodes with number of edges greater or equal to 3
+    selected_edges = [(u,v) for u,v in G.edges() if (len(G.out_edges(u)) > threshold or len(G.out_edges(v)) > threshold)]
+    #for u,v in G.edges():
+    #    print(u)
+    #    print(len(G.out_edges(u)))  
+    #print(selected_edges)
+    percent = float(percent_removed) / 100
+    num_removed_edges = int(G.number_of_edges() * percent)
+    #randomly choose edgesi
+    #print(num_removed_edges)
+    selected =  random.sample(list(selected_edges), num_removed_edges)
+    #for edge in selected:
+    #    #if the reverse edge is not in selected
+    #    if (edge[1], edge[0]) not in selected:
+    #        selected.append((edge[1], edge[0]))
+    return selected
 
 def update(G, rate, S, E, I, R, newly_exposed):
     #update daily based on rate 
