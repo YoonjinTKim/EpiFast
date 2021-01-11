@@ -264,7 +264,7 @@ print("calling sequentials")
 susceptible=[node for node in list(G.nodes()) if node not in init_infectious_nodes]
 
 
-print("Day\tSusceptible\tExposed\tInterfectious\tRecovered\tNewly Exposed")
+print("Day\tSusceptible\tExposed\tInfectious\tRecovered\tNewly Exposed")
 if (intervention == 0):
     sequential(G, rate, susceptible, exposed, infectious, removed, newly_exposed, T, t_r)
 elif (intervention == 1):
