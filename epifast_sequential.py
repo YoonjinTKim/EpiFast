@@ -107,7 +107,7 @@ def sequential(G, rate, S, E, I, R, NE, T, t_rate):
                 if (c[1] in S) and (np.random.binomial(1, t_rate) >0):
                     NE.append(c[1])
                     S.remove(c[1])
-            print("%s\t%s\t%s\t%s\t%s\t%s" % (str(t+1), str(len(S)), str(len(E.keys())), str(len(I.keys())), str(len(R)), str(len(NE))))
+        print("%s\t%s\t%s\t%s\t%s\t%s" % (str(t+1), str(len(S)), str(len(E.keys())), str(len(I.keys())), str(len(R)), str(len(NE))))
 
 def seq_intervention1(G, rate, S, E, I, R, NE, T, t_rate, remove_edge_percent=10):
     for t in range(T):
@@ -137,7 +137,7 @@ def seq_intervention1(G, rate, S, E, I, R, NE, T, t_rate, remove_edge_percent=10
                     NE.append(c[1])
                     S.remove(c[1])
 
-            print("%s\t%s\t%s\t%s\t%s\t%s" % (str(t+1), str(len(S)), str(len(E.keys())), str(len(I.keys())), str(len(R)), str(len(NE))))
+        print("%s\t%s\t%s\t%s\t%s\t%s" % (str(t+1), str(len(S)), str(len(E.keys())), str(len(I.keys())), str(len(R)), str(len(NE))))
 
 def seq_intervention2(G, rate, S, E, I, R, NE, T, t_rate, remove_edge_percent=10, threshold=5):
     for t in range(T):
@@ -166,7 +166,7 @@ def seq_intervention2(G, rate, S, E, I, R, NE, T, t_rate, remove_edge_percent=10
                     NE.append(c[1])
                     S.remove(c[1])
 
-            print("%s\t%s\t%s\t%s\t%s\t%s" % (str(t+1), str(len(S)), str(len(E.keys())), str(len(I.keys())), str(len(R)), str(len(NE))))
+        print("%s\t%s\t%s\t%s\t%s\t%s" % (str(t+1), str(len(S)), str(len(E.keys())), str(len(I.keys())), str(len(R)), str(len(NE))))
         
 print("Starting.....")
 
@@ -189,7 +189,7 @@ parser.add_argument("--transmission_rate", required=False, type=str, default="0.
 parser.add_argument("--incubation_period", required=False, type=int, default="2", help="Average time period(in days) to be in exposed phase")
 parser.add_argument("--infectious_period", required=False, type=int, default="4", help="Average time period(in days) to be infectious to other nodes")
 parser.add_argument("--intervention", required=False, type=int, default="0", help="Options for intervention. Default 0. 0=No intervention, 1=Intervention 1, 2=intervention2")
-parser.add_arguemnt("--remove_edge_percent", required=False, type=int, default=10, help="With intervention option removing 10% of edges")
+parser.add_argument("--remove_edge_percent", required=False, type=int, default=10, help="With intervention option removing 10% of edges")
 parser.add_argument("--threshold", required=False, type=int, default=5, help="Only edges from node with 5+ edges will be considered to be removed with intervention 2")
 
 
