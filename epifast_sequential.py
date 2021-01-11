@@ -28,6 +28,43 @@ def add_both_edge(G, node1, node2):
     G.add_edge(node2, node1, weight=1)
     #print('added')
 
+#Call intervention when more than 2% of population is infected
+#return list of edges 
+#default percent_remove = 10%
+def intervention1(G, percent_removed=10):
+    #number of edges removed
+    #When more than 0.1% of the population are infectious,
+    percent = percent_removed / 100
+    num_removed_edges = int(G.number_of_edges() * percent)
+    #randomly choose edges
+    selected =  random.sample(G.edges(), num_removed_edges)
+    #add its reverse as well 
+    for edge in selected:
+        #if the reverse edge is not in selected
+        if (edge[1], edge[0]) not in selected:
+            selected.append((edge[1], edge[0]))
+    return selected
+
+
+#Call intervention when more than 2% of population is infected
+#return list of edges 
+#default percent_remove = 10%
+def intervention1(G, percent_removed=10):
+    #number of edges removed
+    #When more than 0.1% of the population are infectious,
+    percent = percent_removed / 100
+    num_removed_edges = int(G.number_of_edges() * percent)
+    #randomly choose edges
+    selected =  random.sample(G.edges(), num_removed_edges)
+    #add its reverse as well 
+    for edge in selected:
+        #if the reverse edge is not in selected
+        if (edge[1], edge[0]) not in selected:
+            selected.append((edge[1], edge[0]))
+    return selected
+
+
+
 def update(G, rate, S, E, I, R, newly_exposed):
     #update daily based on rate 
     #S, E, I, and R represents list of nodes with number of days in 
